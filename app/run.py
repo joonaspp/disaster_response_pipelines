@@ -63,6 +63,22 @@ def index():
                     'title': "Genre"
                 }
             }
+        },
+        {
+            'data': [
+                Bar(
+                    y=category_names,
+                    x=category_counts,
+                    orientation = 'h'
+                )
+            ],
+
+            'layout': {
+                'title': 'Top 5 Categories',
+                'xaxis': {
+                    'title': "Count"
+                }
+            }
         }
     ]
     
