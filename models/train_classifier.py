@@ -17,6 +17,7 @@ from nltk.tokenize import word_tokenize
 from nltk.stem.porter import PorterStemmer
 from sklearn.metrics import classification_report
 import pickle
+from sklearn.model_selection import GridSearchCV
 
 def load_data(database_filepath):
     #Import Python libraries
@@ -50,7 +51,12 @@ def build_model():
     ('tfidf', TfidfTransformer()),
     ('clf', MultiOutputClassifier(RandomForestClassifier()))
 ])
-    return pipeline
+    parameters = {
+    'vect__max_df':[0.70,1.0],
+    'clf__estimator__n_estimators': [30, 50]
+    }
+    model = GridSearchCV(pipeline, param_grid=parameters)
+    return model
 
 def evaluate_model(model, X_test, Y_test, category_names):
     #Report the f1 score, precision and recall for each output category of the dataset. You can do this by iterating through the columns and calling sklearn's classification_report on each.
