@@ -37,4 +37,4 @@ Clean and modular code
 Follow the RUBRIC when you work on your project to assure you meet all of the necessary criteria for developing the pipelines and web app.
 
 ## Project Motivation
-First project developed on the Udacity platform in the Data Scientist Nanodegree program, and also the first challenge proposed on the Kaggle platform.
+Third project developed on the Udacity platform in the Data Scientist Nanodegree program, and also the first challenge proposed on the Kaggle platform.
