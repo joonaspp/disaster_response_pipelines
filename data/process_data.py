@@ -3,6 +3,16 @@ import pandas as pd
 from sqlalchemy import create_engine
 
 def load_data(messages_filepath, categories_filepath):
+    '''
+    load messages and categories dataset and merge datasets
+    
+    Parameters:
+    messages_filepath: messages dataset
+    categories_filepath: categories dataset
+    
+    Returns:
+    df: the dataframe merge
+    '''
     
     # load messages and categories dataset
     messages = pd.read_csv(messages_filepath)
@@ -14,6 +24,15 @@ def load_data(messages_filepath, categories_filepath):
     return df
 
 def clean_data(df):
+    '''
+    cleaning the dataframe
+    
+    Parameters:
+    df: dataframe
+    
+    Returns:
+    df: cleaned dataframe
+    '''
     
     # create a dataframe of the 36 individual category columns
     categories = df['categories'].str.split(';', expand=True)
@@ -42,6 +61,14 @@ def clean_data(df):
 
 
 def save_data(df, database_filename):
+    '''
+    saving database
+    
+    Parameters:
+    df: dataframe, database_filename: sql database
+    
+    '''
+    
     #You can do this with pandas to_sql method combined with the SQLAlchemy library. Remember to import SQLAlchemy's create_engine in the first cell of this notebook to use it below
     engine = create_engine('sqlite:///' + database_filename)
     df.to_sql('df_projeto3', engine, index=False)
