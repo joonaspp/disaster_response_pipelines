@@ -20,7 +20,18 @@ import pickle
 from sklearn.model_selection import GridSearchCV
 
 def load_data(database_filepath):
-    #Import Python libraries
+    '''
+    load dataset from database with read_sql_table
+    
+    Parameters:
+    database_filepath: database
+    
+    Returns:
+    X: the message column
+    y: the categories
+    category_name: the names of the columns
+    '''
+    
     #Load dataset from database with read_sql_table
     #Define feature and target variables X and Y
     engine = create_engine('sqlite:///' + database_filepath)
@@ -33,6 +44,16 @@ def load_data(database_filepath):
 
 
 def tokenize(text):
+    '''
+    tokenization function to process your text data
+    
+    Parameters:
+    text: message
+    
+    Returns:
+    stemmed: a list of tokenization
+    '''
+    
     # Write a tokenization function to process your text data
     text = re.sub(r"[^a-zA-Z0-9]", " ", text.lower())
     tokens = word_tokenize(text)
@@ -44,7 +65,13 @@ def tokenize(text):
 
 
 def build_model():
-    #Build a machine learning pipeline
+    '''
+    build a machine learning pipeline
+    
+    Returns:
+    model: model with gridsearch
+    '''
+    
     #This machine pipeline should take in the message column as input and output classification results on the other 36 categories in the dataset. You may find the MultiOutputClassifier helpful for predicting multiple target variables.
     pipeline = Pipeline([
     ('vect', CountVectorizer(tokenizer = tokenize)),
@@ -59,6 +86,15 @@ def build_model():
     return model
 
 def evaluate_model(model, X_test, Y_test, category_names):
+    ''' 
+    evaluate the model performance by f1 score, precision and recall
+    
+    Parameters:
+    model: model
+    X_test: message test
+    Y_test: category test
+    category_names: the names of the categories
+    '''
     #Report the f1 score, precision and recall for each output category of the dataset. You can do this by iterating through the columns and calling sklearn's classification_report on each.
     Y_pred = model.predict(X_test)
     print(classification_report(Y_test, Y_pred, target_names=category_names))
@@ -66,6 +102,13 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 
 def save_model(model, model_filepath):
+     '''
+    save the model
+    
+    Parameters:
+    model: model
+    model_filepath: the filepath of model
+    '''
     pickle.dump(model, open(model_filepath, 'wb'))
 
 
